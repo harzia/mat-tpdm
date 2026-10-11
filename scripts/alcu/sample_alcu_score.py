@@ -209,6 +209,7 @@ def main():
             shape = (end - start, 1, args.patch_size, args.patch_size)
             sde = sde_lib.VESDE(sigma_min=config.model.sigma_min,
                                 sigma_max=config.model.sigma_max, N=args.steps)
+            sde.discrete_sigmas = sde.discrete_sigmas.to(config.device)
             sampler = sampling.get_sampling_fn(config, sde, shape, inverse_scaler, args.eps)
             print(f'Batch {batch_idx+1}/{total_batches}: generating samples {start}..{end-1} '
                   f'(seed={batch_seed})', flush=True)
